@@ -83,12 +83,20 @@ const WardrobeScreen = ({ navigation }) => {
             {item.isWaterproof && " • 💧 Imperméable"}
           </Text>
         </View>
-        <TouchableOpacity
-          style={styles.deleteButton}
-          onPress={() => handleDelete(item._id, item.name)}
-        >
-          <Text style={styles.deleteButtonText}>🗑️</Text>
-        </TouchableOpacity>
+        <View style={styles.actionButtons}>
+          <TouchableOpacity
+            style={styles.editButton}
+            onPress={() => navigation.navigate("EditClothing", { item })}
+          >
+            <Text style={styles.editButtonText}>✏️</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={() => handleDelete(item._id, item.name)}
+          >
+            <Text style={styles.deleteButtonText}>🗑️</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -182,6 +190,16 @@ const styles = StyleSheet.create({
   itemTemp: {
     fontSize: 12,
     color: "#999",
+  },
+  actionButtons: {
+    flexDirection: "row",
+    gap: 8,
+  },
+  editButton: {
+    padding: 8,
+  },
+  editButtonText: {
+    fontSize: 22,
   },
   deleteButton: {
     padding: 8,

@@ -15,7 +15,7 @@ router.post("/suggest", async (req, res) => {
     if (!latitude || !longitude) {
       return res
         .status(400)
-        .json({ error: "Location coordinates are required" });
+        .json({ error: "Les coordonnées de localisation sont requises" });
     }
 
     const weather = await weatherService.getWeather(latitude, longitude);

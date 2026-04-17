@@ -22,6 +22,7 @@ api.interceptors.request.use(
 export const clothingAPI = {
   getAll: () => api.get("/clothing"),
   create: (data) => api.post("/clothing", data),
+  update: (id, data) => api.put(`/clothing/${id}`, data),
   delete: (id) => api.delete(`/clothing/${id}`),
 };
 

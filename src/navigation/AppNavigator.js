@@ -10,6 +10,7 @@ import RegisterScreen from "../screens/RegisterScreen";
 import HomeScreen from "../screens/HomeScreen";
 import WardrobeScreen from "../screens/WardrobeScreen";
 import AddClothingScreen from "../screens/AddClothingScreen";
+import EditClothingScreen from "../screens/EditClothingScreen";
 import ResultScreen from "../screens/ResultScreen";
 
 const Stack = createStackNavigator();
@@ -27,6 +28,11 @@ const WardrobeStack = () => {
         name="AddClothing"
         component={AddClothingScreen}
         options={{ title: "Ajouter un Vêtement" }}
+      />
+      <Stack.Screen
+        name="EditClothing"
+        component={EditClothingScreen}
+        options={{ title: "Modifier le Vêtement" }}
       />
     </Stack.Navigator>
   );
