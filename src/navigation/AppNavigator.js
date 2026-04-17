@@ -21,12 +21,12 @@ const WardrobeStack = () => {
       <Stack.Screen
         name="WardrobeList"
         component={WardrobeScreen}
-        options={{ title: "My Wardrobe" }}
+        options={{ title: "Ma Garde-robe" }}
       />
       <Stack.Screen
         name="AddClothing"
         component={AddClothingScreen}
-        options={{ title: "Add Clothing" }}
+        options={{ title: "Ajouter un Vêtement" }}
       />
     </Stack.Navigator>
   );
@@ -49,7 +49,7 @@ const MainTabs = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "Accueil",
           tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>🏠</Text>,
           headerShown: false,
         }}
@@ -58,7 +58,7 @@ const MainTabs = () => {
         name="Wardrobe"
         component={WardrobeStack}
         options={{
-          tabBarLabel: "Wardrobe",
+          tabBarLabel: "Garde-robe",
           tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>👔</Text>,
           headerShown: false,
         }}
@@ -86,7 +86,7 @@ const AppNavigator = () => {
           <Stack.Screen
             name="Result"
             component={ResultScreen}
-            options={{ title: "Outfit Suggestion" }}
+            options={{ title: "Suggestion de Tenue" }}
           />
         </Stack.Navigator>
       ) : (

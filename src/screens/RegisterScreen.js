@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,25 +8,28 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  ActivityIndicator
-} from 'react-native';
-import { useAuth } from '../context/AuthContext';
+  ActivityIndicator,
+} from "react-native";
+import { useAuth } from "../context/AuthContext";
 
 const RegisterScreen = ({ navigation }) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
 
   const handleRegister = async () => {
     if (!name || !email || !password) {
-      Alert.alert('Error', 'Please fill in all fields');
+      Alert.alert("Erreur", "Veuillez remplir tous les champs");
       return;
     }
 
     if (password.length < 6) {
-      Alert.alert('Error', 'Password must be at least 6 characters');
+      Alert.alert(
+        "Erreur",
+        "Le mot de passe doit contenir au moins 6 caractères",
+      );
       return;
     }
 
@@ -35,23 +38,23 @@ const RegisterScreen = ({ navigation }) => {
     setLoading(false);
 
     if (!result.success) {
-      Alert.alert('Registration Failed', result.error);
+      Alert.alert("Inscription échouée", result.error);
     }
   };
 
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
       <View style={styles.content}>
-        <Text style={styles.title}>Create Account</Text>
-        <Text style={styles.subtitle}>Join Smart Wardrobe today</Text>
+        <Text style={styles.title}>Créer un compte</Text>
+        <Text style={styles.subtitle}>Rejoignez Smart Wardrobe</Text>
 
         <View style={styles.form}>
           <TextInput
             style={styles.input}
-            placeholder="Full Name"
+            placeholder="Nom complet"
             value={name}
             onChangeText={setName}
             placeholderTextColor="#999"
@@ -69,14 +72,14 @@ const RegisterScreen = ({ navigation }) => {
 
           <TextInput
             style={styles.input}
-            placeholder="Password (min 6 characters)"
+            placeholder="Mot de passe (min 6 caractères)"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
             placeholderTextColor="#999"
           />
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.button}
             onPress={handleRegister}
             disabled={loading}
@@ -84,16 +87,17 @@ const RegisterScreen = ({ navigation }) => {
             {loading ? (
               <ActivityIndicator color="#fff" />
             ) : (
-              <Text style={styles.buttonText}>Sign Up</Text>
+              <Text style={styles.buttonText}>S'inscrire</Text>
             )}
           </TouchableOpacity>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.linkButton}
             onPress={() => navigation.goBack()}
           >
             <Text style={styles.linkText}>
-              Already have an account? <Text style={styles.linkTextBold}>Login</Text>
+              Déjà un compte ?{" "}
+              <Text style={styles.linkTextBold}>Connexion</Text>
             </Text>
           </TouchableOpacity>
         </View>
@@ -105,62 +109,62 @@ const RegisterScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa'
+    backgroundColor: "#f8f9fa",
   },
   content: {
     flex: 1,
-    justifyContent: 'center',
-    padding: 24
+    justifyContent: "center",
+    padding: 24,
   },
   title: {
     fontSize: 32,
-    fontWeight: 'bold',
-    color: '#1a1a1a',
-    textAlign: 'center',
-    marginBottom: 8
+    fontWeight: "bold",
+    color: "#1a1a1a",
+    textAlign: "center",
+    marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: '#666',
-    textAlign: 'center',
-    marginBottom: 48
+    color: "#666",
+    textAlign: "center",
+    marginBottom: 48,
   },
   form: {
-    width: '100%'
+    width: "100%",
   },
   input: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 12,
     padding: 16,
     fontSize: 16,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#e0e0e0'
+    borderColor: "#e0e0e0",
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: "#007AFF",
     borderRadius: 12,
     padding: 16,
-    alignItems: 'center',
-    marginTop: 8
+    alignItems: "center",
+    marginTop: 8,
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: '600'
+    fontWeight: "600",
   },
   linkButton: {
     marginTop: 24,
-    alignItems: 'center'
+    alignItems: "center",
   },
   linkText: {
-    color: '#666',
-    fontSize: 14
+    color: "#666",
+    fontSize: 14,
   },
   linkTextBold: {
-    color: '#007AFF',
-    fontWeight: '600'
-  }
+    color: "#007AFF",
+    fontWeight: "600",
+  },
 });
 
 export default RegisterScreen;

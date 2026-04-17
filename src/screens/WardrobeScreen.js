@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -7,10 +7,10 @@ import {
   StyleSheet,
   Alert,
   ActivityIndicator,
-  RefreshControl
-} from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
-import { clothingAPI } from '../services/api';
+  RefreshControl,
+} from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import { clothingAPI } from "../services/api";
 
 const WardrobeScreen = ({ navigation }) => {
   const [clothes, setClothes] = useState([]);
@@ -22,7 +22,7 @@ const WardrobeScreen = ({ navigation }) => {
       const response = await clothingAPI.getAll();
       setClothes(response.data);
     } catch (error) {
-      Alert.alert('Error', 'Failed to load wardrobe');
+      Alert.alert("Erreur", "Impossible de charger la garde-robe");
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -32,7 +32,7 @@ const WardrobeScreen = ({ navigation }) => {
   useFocusEffect(
     useCallback(() => {
       fetchClothes();
-    }, [])
+    }, []),
   );
 
   const onRefresh = () => {
@@ -41,36 +41,32 @@ const WardrobeScreen = ({ navigation }) => {
   };
 
   const handleDelete = (id, name) => {
-    Alert.alert(
-      'Delete Item',
-      `Are you sure you want to delete "${name}"?`,
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await clothingAPI.delete(id);
-              setClothes(clothes.filter(item => item._id !== id));
-            } catch (error) {
-              Alert.alert('Error', 'Failed to delete item');
-            }
+    Alert.alert("Supprimer", `Voulez-vous vraiment supprimer "${name}" ?`, [
+      { text: "Annuler", style: "cancel" },
+      {
+        text: "Supprimer",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            await clothingAPI.delete(id);
+            setClothes(clothes.filter((item) => item._id !== id));
+          } catch (error) {
+            Alert.alert("Erreur", "Impossible de supprimer l'article");
           }
-        }
-      ]
-    );
+        },
+      },
+    ]);
   };
 
   const getTypeIcon = (type) => {
     const icons = {
-      top: '👕',
-      bottom: '👖',
-      shoes: '👟',
-      outerwear: '🧥',
-      accessory: '🎩'
+      top: "👕",
+      bottom: "👖",
+      shoes: "👟",
+      outerwear: "🧥",
+      accessory: "🎩",
     };
-    return icons[type] || '👔';
+    return icons[type] || "👔";
   };
 
   const renderItem = ({ item }) => (
@@ -84,7 +80,7 @@ const WardrobeScreen = ({ navigation }) => {
           </Text>
           <Text style={styles.itemTemp}>
             {item.temperatureMin}°C - {item.temperatureMax}°C
-            {item.isWaterproof && ' • 💧 Waterproof'}
+            {item.isWaterproof && " • 💧 Imperméable"}
           </Text>
         </View>
         <TouchableOpacity
@@ -115,18 +111,20 @@ const WardrobeScreen = ({ navigation }) => {
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyIcon}>👔</Text>
-            <Text style={styles.emptyText}>Your wardrobe is empty</Text>
-            <Text style={styles.emptySubtext}>Add your first clothing item</Text>
+            <Text style={styles.emptyText}>Votre garde-robe est vide</Text>
+            <Text style={styles.emptySubtext}>
+              Ajoutez votre premier vêtement
+            </Text>
           </View>
         }
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       />
-      
+
       <TouchableOpacity
         style={styles.fab}
-        onPress={() => navigation.navigate('AddClothing')}
+        onPress={() => navigation.navigate("AddClothing")}
       >
         <Text style={styles.fabText}>+</Text>
       </TouchableOpacity>
@@ -137,99 +135,99 @@ const WardrobeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa'
+    backgroundColor: "#f8f9fa",
   },
   centerContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
   list: {
     padding: 16,
-    paddingBottom: 80
+    paddingBottom: 80,
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 2
+    elevation: 2,
   },
   cardHeader: {
-    flexDirection: 'row',
-    alignItems: 'center'
+    flexDirection: "row",
+    alignItems: "center",
   },
   icon: {
     fontSize: 40,
-    marginRight: 12
+    marginRight: 12,
   },
   cardInfo: {
-    flex: 1
+    flex: 1,
   },
   itemName: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#1a1a1a',
-    marginBottom: 4
+    fontWeight: "600",
+    color: "#1a1a1a",
+    marginBottom: 4,
   },
   itemDetails: {
     fontSize: 14,
-    color: '#666',
-    marginBottom: 2
+    color: "#666",
+    marginBottom: 2,
   },
   itemTemp: {
     fontSize: 12,
-    color: '#999'
+    color: "#999",
   },
   deleteButton: {
-    padding: 8
+    padding: 8,
   },
   deleteButtonText: {
-    fontSize: 24
+    fontSize: 24,
   },
   emptyContainer: {
-    alignItems: 'center',
-    marginTop: 100
+    alignItems: "center",
+    marginTop: 100,
   },
   emptyIcon: {
     fontSize: 64,
-    marginBottom: 16
+    marginBottom: 16,
   },
   emptyText: {
     fontSize: 20,
-    fontWeight: '600',
-    color: '#1a1a1a',
-    marginBottom: 8
+    fontWeight: "600",
+    color: "#1a1a1a",
+    marginBottom: 8,
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#666'
+    color: "#666",
   },
   fab: {
-    position: 'absolute',
+    position: "absolute",
     right: 20,
     bottom: 20,
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: '#007AFF',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
+    backgroundColor: "#007AFF",
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
-    elevation: 8
+    elevation: 8,
   },
   fabText: {
     fontSize: 32,
-    color: '#fff',
-    fontWeight: '300'
-  }
+    color: "#fff",
+    fontWeight: "300",
+  },
 });
 
 export default WardrobeScreen;

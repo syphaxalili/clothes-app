@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,19 +8,19 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  ActivityIndicator
-} from 'react-native';
-import { useAuth } from '../context/AuthContext';
+  ActivityIndicator,
+} from "react-native";
+import { useAuth } from "../context/AuthContext";
 
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert('Error', 'Please fill in all fields');
+      Alert.alert("Erreur", "Veuillez remplir tous les champs");
       return;
     }
 
@@ -29,18 +29,18 @@ const LoginScreen = ({ navigation }) => {
     setLoading(false);
 
     if (!result.success) {
-      Alert.alert('Login Failed', result.error);
+      Alert.alert("Connexion échouée", result.error);
     }
   };
 
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
       <View style={styles.content}>
         <Text style={styles.title}>Smart Wardrobe</Text>
-        <Text style={styles.subtitle}>Your Personal Style Assistant</Text>
+        <Text style={styles.subtitle}>Votre Assistant Style Personnel</Text>
 
         <View style={styles.form}>
           <TextInput
@@ -55,14 +55,14 @@ const LoginScreen = ({ navigation }) => {
 
           <TextInput
             style={styles.input}
-            placeholder="Password"
+            placeholder="Mot de passe"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
             placeholderTextColor="#999"
           />
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.button}
             onPress={handleLogin}
             disabled={loading}
@@ -70,16 +70,17 @@ const LoginScreen = ({ navigation }) => {
             {loading ? (
               <ActivityIndicator color="#fff" />
             ) : (
-              <Text style={styles.buttonText}>Login</Text>
+              <Text style={styles.buttonText}>Connexion</Text>
             )}
           </TouchableOpacity>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.linkButton}
-            onPress={() => navigation.navigate('Register')}
+            onPress={() => navigation.navigate("Register")}
           >
             <Text style={styles.linkText}>
-              Don't have an account? <Text style={styles.linkTextBold}>Sign up</Text>
+              Pas de compte ?{" "}
+              <Text style={styles.linkTextBold}>S'inscrire</Text>
             </Text>
           </TouchableOpacity>
         </View>
@@ -91,62 +92,62 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa'
+    backgroundColor: "#f8f9fa",
   },
   content: {
     flex: 1,
-    justifyContent: 'center',
-    padding: 24
+    justifyContent: "center",
+    padding: 24,
   },
   title: {
     fontSize: 32,
-    fontWeight: 'bold',
-    color: '#1a1a1a',
-    textAlign: 'center',
-    marginBottom: 8
+    fontWeight: "bold",
+    color: "#1a1a1a",
+    textAlign: "center",
+    marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: '#666',
-    textAlign: 'center',
-    marginBottom: 48
+    color: "#666",
+    textAlign: "center",
+    marginBottom: 48,
   },
   form: {
-    width: '100%'
+    width: "100%",
   },
   input: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 12,
     padding: 16,
     fontSize: 16,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#e0e0e0'
+    borderColor: "#e0e0e0",
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: "#007AFF",
     borderRadius: 12,
     padding: 16,
-    alignItems: 'center',
-    marginTop: 8
+    alignItems: "center",
+    marginTop: 8,
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: '600'
+    fontWeight: "600",
   },
   linkButton: {
     marginTop: 24,
-    alignItems: 'center'
+    alignItems: "center",
   },
   linkText: {
-    color: '#666',
-    fontSize: 14
+    color: "#666",
+    fontSize: 14,
   },
   linkTextBold: {
-    color: '#007AFF',
-    fontWeight: '600'
-  }
+    color: "#007AFF",
+    fontWeight: "600",
+  },
 });
 
 export default LoginScreen;

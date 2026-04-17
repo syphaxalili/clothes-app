@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
   ScrollView,
   StyleSheet,
-  TouchableOpacity
-} from 'react-native';
+  TouchableOpacity,
+} from "react-native";
 
 const ResultScreen = ({ route, navigation }) => {
   const { outfit } = route.params;
@@ -13,13 +13,13 @@ const ResultScreen = ({ route, navigation }) => {
 
   const getTypeIcon = (type) => {
     const icons = {
-      top: '👕',
-      bottom: '👖',
-      shoes: '👟',
-      outerwear: '🧥',
-      accessories: '🎩'
+      top: "👕",
+      bottom: "👖",
+      shoes: "👟",
+      outerwear: "🧥",
+      accessories: "🎩",
     };
-    return icons[type] || '👔';
+    return icons[type] || "👔";
   };
 
   const renderClothingItem = (item, type) => {
@@ -44,43 +44,43 @@ const ResultScreen = ({ route, navigation }) => {
       <View style={styles.content}>
         <View style={styles.weatherCard}>
           <Text style={styles.weatherIcon}>
-            {weather.isRaining ? '🌧️' : '☀️'}
+            {weather.isRaining ? "🌧️" : "☀️"}
           </Text>
           <View>
             <Text style={styles.weatherTemp}>{weather.temperature}°C</Text>
             <Text style={styles.weatherCondition}>
-              {weather.isRaining ? 'Rainy' : 'Clear'}
+              {weather.isRaining ? "Pluvieux" : "Ensoleillé"}
             </Text>
           </View>
         </View>
 
-        <Text style={styles.sectionTitle}>Your Perfect Outfit</Text>
+        <Text style={styles.sectionTitle}>Votre Tenue Parfaite</Text>
 
-        {renderClothingItem(items.top, 'top')}
-        {renderClothingItem(items.bottom, 'bottom')}
-        {renderClothingItem(items.shoes, 'shoes')}
-        {renderClothingItem(items.outerwear, 'outerwear')}
-        
+        {renderClothingItem(items.top, "top")}
+        {renderClothingItem(items.bottom, "bottom")}
+        {renderClothingItem(items.shoes, "shoes")}
+        {renderClothingItem(items.outerwear, "outerwear")}
+
         {items.accessories && items.accessories.length > 0 && (
           <>
             {items.accessories.map((accessory, index) => (
               <View key={index}>
-                {renderClothingItem(accessory, 'accessories')}
+                {renderClothingItem(accessory, "accessories")}
               </View>
             ))}
           </>
         )}
 
         <View style={styles.explanationCard}>
-          <Text style={styles.explanationTitle}>💡 Style Tip</Text>
+          <Text style={styles.explanationTitle}>💡 Conseil Style</Text>
           <Text style={styles.explanationText}>{explanation}</Text>
         </View>
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.navigate("Home")}
         >
-          <Text style={styles.buttonText}>Get Another Suggestion</Text>
+          <Text style={styles.buttonText}>Obtenir une autre suggestion</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -90,105 +90,105 @@ const ResultScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa'
+    backgroundColor: "#f8f9fa",
   },
   content: {
-    padding: 20
+    padding: 20,
   },
   weatherCard: {
-    backgroundColor: '#007AFF',
+    backgroundColor: "#007AFF",
     borderRadius: 16,
     padding: 24,
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 24
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 24,
   },
   weatherIcon: {
     fontSize: 48,
-    marginRight: 16
+    marginRight: 16,
   },
   weatherTemp: {
     fontSize: 32,
-    fontWeight: 'bold',
-    color: '#fff'
+    fontWeight: "bold",
+    color: "#fff",
   },
   weatherCondition: {
     fontSize: 16,
-    color: '#fff',
-    opacity: 0.9
+    color: "#fff",
+    opacity: 0.9,
   },
   sectionTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#1a1a1a',
-    marginBottom: 16
+    fontWeight: "bold",
+    color: "#1a1a1a",
+    marginBottom: 16,
   },
   itemCard: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    shadowColor: '#000',
+    flexDirection: "row",
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 2
+    elevation: 2,
   },
   itemIcon: {
     fontSize: 40,
-    marginRight: 16
+    marginRight: 16,
   },
   itemInfo: {
-    flex: 1
+    flex: 1,
   },
   itemType: {
     fontSize: 12,
-    fontWeight: '600',
-    color: '#007AFF',
-    marginBottom: 4
+    fontWeight: "600",
+    color: "#007AFF",
+    marginBottom: 4,
   },
   itemName: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#1a1a1a',
-    marginBottom: 4
+    fontWeight: "600",
+    color: "#1a1a1a",
+    marginBottom: 4,
   },
   itemDetails: {
     fontSize: 14,
-    color: '#666'
+    color: "#666",
   },
   explanationCard: {
-    backgroundColor: '#fff3cd',
+    backgroundColor: "#fff3cd",
     borderRadius: 12,
     padding: 20,
     marginTop: 8,
-    marginBottom: 24
+    marginBottom: 24,
   },
   explanationTitle: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#856404',
-    marginBottom: 8
+    fontWeight: "600",
+    color: "#856404",
+    marginBottom: 8,
   },
   explanationText: {
     fontSize: 14,
-    color: '#856404',
-    lineHeight: 20
+    color: "#856404",
+    lineHeight: 20,
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: "#007AFF",
     borderRadius: 12,
     padding: 16,
-    alignItems: 'center',
-    marginBottom: 32
+    alignItems: "center",
+    marginBottom: 32,
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: '600'
-  }
+    fontWeight: "600",
+  },
 });
 
 export default ResultScreen;

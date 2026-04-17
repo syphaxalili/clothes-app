@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,25 +7,36 @@ import {
   StyleSheet,
   ScrollView,
   Alert,
-  ActivityIndicator
-} from 'react-native';
-import { clothingAPI } from '../services/api';
+  ActivityIndicator,
+} from "react-native";
+import { clothingAPI } from "../services/api";
 
 const AddClothingScreen = ({ navigation }) => {
-  const [name, setName] = useState('');
-  const [type, setType] = useState('top');
-  const [style, setStyle] = useState('');
-  const [color, setColor] = useState('');
+  const [name, setName] = useState("");
+  const [type, setType] = useState("top");
+  const [style, setStyle] = useState("");
+  const [color, setColor] = useState("");
   const [isWaterproof, setIsWaterproof] = useState(false);
-  const [temperatureMin, setTemperatureMin] = useState('');
-  const [temperatureMax, setTemperatureMax] = useState('');
+  const [temperatureMin, setTemperatureMin] = useState("");
+  const [temperatureMax, setTemperatureMax] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const types = ['top', 'bottom', 'shoes', 'outerwear', 'accessory'];
+  const types = ["top", "bottom", "shoes", "outerwear", "accessory"];
+
+  const getTypeLabel = (type) => {
+    const labels = {
+      top: "Haut",
+      bottom: "Bas",
+      shoes: "Chaussures",
+      outerwear: "Veste",
+      accessory: "Accessoire",
+    };
+    return labels[type] || type;
+  };
 
   const handleSubmit = async () => {
     if (!name || !style || !color || !temperatureMin || !temperatureMax) {
-      Alert.alert('Error', 'Please fill in all fields');
+      Alert.alert("Erreur", "Veuillez remplir tous les champs");
       return;
     }
 
@@ -33,12 +44,15 @@ const AddClothingScreen = ({ navigation }) => {
     const maxTemp = parseInt(temperatureMax);
 
     if (isNaN(minTemp) || isNaN(maxTemp)) {
-      Alert.alert('Error', 'Temperature values must be numbers');
+      Alert.alert("Erreur", "Les températures doivent être des nombres");
       return;
     }
 
     if (minTemp > maxTemp) {
-      Alert.alert('Error', 'Minimum temperature cannot be greater than maximum');
+      Alert.alert(
+        "Erreur",
+        "La température minimale ne peut pas être supérieure à la maximale",
+      );
       return;
     }
 
@@ -51,13 +65,13 @@ const AddClothingScreen = ({ navigation }) => {
         color,
         isWaterproof,
         temperatureMin: minTemp,
-        temperatureMax: maxTemp
+        temperatureMax: maxTemp,
       });
 
-      Alert.alert('Success', 'Clothing item added successfully');
+      Alert.alert("Succès", "Vêtement ajouté avec succès");
       navigation.goBack();
     } catch (error) {
-      Alert.alert('Error', 'Failed to add clothing item');
+      Alert.alert("Erreur", "Impossible d'ajouter le vêtement");
     } finally {
       setLoading(false);
     }
@@ -66,10 +80,10 @@ const AddClothingScreen = ({ navigation }) => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.label}>Name</Text>
+        <Text style={styles.label}>Nom</Text>
         <TextInput
           style={styles.input}
-          placeholder="e.g., Blue Denim Jacket"
+          placeholder="ex: Veste en jean bleue"
           value={name}
           onChangeText={setName}
           placeholderTextColor="#999"
@@ -83,8 +97,10 @@ const AddClothingScreen = ({ navigation }) => {
               style={[styles.typeButton, type === t && styles.typeButtonActive]}
               onPress={() => setType(t)}
             >
-              <Text style={[styles.typeText, type === t && styles.typeTextActive]}>
-                {t}
+              <Text
+                style={[styles.typeText, type === t && styles.typeTextActive]}
+              >
+                {getTypeLabel(t)}
               </Text>
             </TouchableOpacity>
           ))}
@@ -93,22 +109,22 @@ const AddClothingScreen = ({ navigation }) => {
         <Text style={styles.label}>Style</Text>
         <TextInput
           style={styles.input}
-          placeholder="e.g., Casual, Formal, Sport"
+          placeholder="ex: Décontracté, Formel, Sport"
           value={style}
           onChangeText={setStyle}
           placeholderTextColor="#999"
         />
 
-        <Text style={styles.label}>Color</Text>
+        <Text style={styles.label}>Couleur</Text>
         <TextInput
           style={styles.input}
-          placeholder="e.g., Blue, Black, Red"
+          placeholder="ex: Bleu, Noir, Rouge"
           value={color}
           onChangeText={setColor}
           placeholderTextColor="#999"
         />
 
-        <Text style={styles.label}>Temperature Range (°C)</Text>
+        <Text style={styles.label}>Plage de température (°C)</Text>
         <View style={styles.row}>
           <TextInput
             style={[styles.input, styles.halfInput]}
@@ -132,10 +148,12 @@ const AddClothingScreen = ({ navigation }) => {
           style={styles.checkboxContainer}
           onPress={() => setIsWaterproof(!isWaterproof)}
         >
-          <View style={[styles.checkbox, isWaterproof && styles.checkboxActive]}>
+          <View
+            style={[styles.checkbox, isWaterproof && styles.checkboxActive]}
+          >
             {isWaterproof && <Text style={styles.checkmark}>✓</Text>}
           </View>
-          <Text style={styles.checkboxLabel}>Waterproof</Text>
+          <Text style={styles.checkboxLabel}>Imperméable</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -146,7 +164,7 @@ const AddClothingScreen = ({ navigation }) => {
           {loading ? (
             <ActivityIndicator color="#fff" />
           ) : (
-            <Text style={styles.submitButtonText}>Add to Wardrobe</Text>
+            <Text style={styles.submitButtonText}>Ajouter à la garde-robe</Text>
           )}
         </TouchableOpacity>
       </View>
@@ -157,100 +175,100 @@ const AddClothingScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa'
+    backgroundColor: "#f8f9fa",
   },
   content: {
-    padding: 20
+    padding: 20,
   },
   label: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#1a1a1a',
+    fontWeight: "600",
+    color: "#1a1a1a",
     marginBottom: 8,
-    marginTop: 16
+    marginTop: 16,
   },
   input: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 12,
     padding: 16,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: '#e0e0e0'
+    borderColor: "#e0e0e0",
   },
   typeContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
   },
   typeButton: {
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 20,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: "#f0f0f0",
     borderWidth: 1,
-    borderColor: '#e0e0e0'
+    borderColor: "#e0e0e0",
   },
   typeButtonActive: {
-    backgroundColor: '#007AFF',
-    borderColor: '#007AFF'
+    backgroundColor: "#007AFF",
+    borderColor: "#007AFF",
   },
   typeText: {
     fontSize: 14,
-    color: '#666',
-    textTransform: 'capitalize'
+    color: "#666",
+    textTransform: "capitalize",
   },
   typeTextActive: {
-    color: '#fff',
-    fontWeight: '600'
+    color: "#fff",
+    fontWeight: "600",
   },
   row: {
-    flexDirection: 'row',
-    gap: 12
+    flexDirection: "row",
+    gap: 12,
   },
   halfInput: {
-    flex: 1
+    flex: 1,
   },
   checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 20
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 20,
   },
   checkbox: {
     width: 24,
     height: 24,
     borderRadius: 6,
     borderWidth: 2,
-    borderColor: '#e0e0e0',
+    borderColor: "#e0e0e0",
     marginRight: 12,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
   checkboxActive: {
-    backgroundColor: '#007AFF',
-    borderColor: '#007AFF'
+    backgroundColor: "#007AFF",
+    borderColor: "#007AFF",
   },
   checkmark: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   checkboxLabel: {
     fontSize: 16,
-    color: '#1a1a1a'
+    color: "#1a1a1a",
   },
   submitButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: "#007AFF",
     borderRadius: 12,
     padding: 16,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 32,
-    marginBottom: 32
+    marginBottom: 32,
   },
   submitButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: '600'
-  }
+    fontWeight: "600",
+  },
 });
 
 export default AddClothingScreen;
