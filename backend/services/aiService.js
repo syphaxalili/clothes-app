@@ -1,9 +1,11 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 class AIService {
   constructor() {
     this.genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    this.model = this.genAI.getGenerativeModel({ model: 'gemini-pro' });
+    this.model = this.genAI.getGenerativeModel({
+      model: "gemini-3.1-flash-lite-preview",
+    });
   }
 
   async generateOutfit(filteredClothes, temperature, isRaining) {
@@ -24,7 +26,7 @@ STRICT RULES:
   "explanation": "Brief explanation of why this outfit works for the weather and style"
 }
 
-Current weather: ${temperature}°C, ${isRaining ? 'Rainy' : 'Dry'}
+Current weather: ${temperature}°C, ${isRaining ? "Rainy" : "Dry"}
 
 Available clothing items:
 ${JSON.stringify(filteredClothes, null, 2)}
@@ -35,17 +37,17 @@ Create the best outfit considering the weather conditions and style harmony.`;
       const result = await this.model.generateContent(systemPrompt);
       const response = await result.response;
       const text = response.text();
-      
+
       const jsonMatch = text.match(/\{[\s\S]*\}/);
       if (!jsonMatch) {
-        throw new Error('AI did not return valid JSON');
+        throw new Error("AI did not return valid JSON");
       }
-      
+
       const outfitData = JSON.parse(jsonMatch[0]);
       return outfitData;
     } catch (error) {
-      console.error('AI Service error:', error.message);
-      throw new Error('Failed to generate outfit suggestion');
+      console.error("AI Service error:", error.message);
+      throw new Error("Failed to generate outfit suggestion");
     }
   }
 }
