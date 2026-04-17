@@ -1,8 +1,9 @@
 import React from "react";
-import { Text } from "react-native";
+import { Platform, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAuth } from "../context/AuthContext";
 
 import LoginScreen from "../screens/LoginScreen";
@@ -27,27 +28,40 @@ const WardrobeStack = () => {
       <Stack.Screen
         name="AddClothing"
         component={AddClothingScreen}
-        options={{ title: "Ajouter un Vêtement" }}
+        options={{ title: "Ajouter un vêtement" }}
       />
       <Stack.Screen
         name="EditClothing"
         component={EditClothingScreen}
-        options={{ title: "Modifier le Vêtement" }}
+        options={{ title: "Modifier le vêtement" }}
       />
     </Stack.Navigator>
   );
 };
 
 const MainTabs = () => {
+  const insets = useSafeAreaInsets();
+  const bottomInset = Math.max(insets.bottom, 10);
+
   return (
     <Tab.Navigator
       screenOptions={{
+        headerShown: false,
         tabBarActiveTintColor: "#007AFF",
         tabBarInactiveTintColor: "#999",
+        tabBarHideOnKeyboard: true,
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: "600",
+          marginBottom: Platform.OS === "android" ? 4 : 0,
+        },
+        tabBarItemStyle: {
+          paddingVertical: 4,
+        },
         tabBarStyle: {
-          paddingBottom: 5,
-          paddingTop: 5,
-          height: 60,
+          paddingTop: 8,
+          paddingBottom: bottomInset,
+          height: 58 + bottomInset,
         },
       }}
     >
@@ -56,8 +70,9 @@ const MainTabs = () => {
         component={HomeScreen}
         options={{
           tabBarLabel: "Accueil",
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>🏠</Text>,
-          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <Text style={{ fontSize: 22, color }}>🏠</Text>
+          ),
         }}
       />
       <Tab.Screen
@@ -65,8 +80,9 @@ const MainTabs = () => {
         component={WardrobeStack}
         options={{
           tabBarLabel: "Garde-robe",
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>👔</Text>,
-          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <Text style={{ fontSize: 22, color }}>👔</Text>
+          ),
         }}
       />
     </Tab.Navigator>
@@ -92,7 +108,7 @@ const AppNavigator = () => {
           <Stack.Screen
             name="Result"
             component={ResultScreen}
-            options={{ title: "Suggestion de Tenue" }}
+            options={{ title: "Suggestion de tenue" }}
           />
         </Stack.Navigator>
       ) : (

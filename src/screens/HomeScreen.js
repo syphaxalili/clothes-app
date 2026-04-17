@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,17 +7,26 @@ import {
   Alert,
   ActivityIndicator,
   ScrollView,
+  useWindowDimensions,
 } from "react-native";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Location from "expo-location";
 import { outfitAPI, weatherAPI } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
 const HomeScreen = ({ navigation }) => {
   const { user, logout } = useAuth();
+  const { width } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+  const tabBarHeight = useBottomTabBarHeight();
   const [loading, setLoading] = useState(false);
-  const [outfit, setOutfit] = useState(null);
   const [weather, setWeather] = useState(null);
   const [loadingWeather, setLoadingWeather] = useState(false);
+
+  const isCompact = width < 380;
+  const isVeryCompact = width < 350;
+  const horizontalPadding = isCompact ? 16 : 20;
 
   useEffect(() => {
     loadWeather();
@@ -62,8 +71,6 @@ const HomeScreen = ({ navigation }) => {
       const { latitude, longitude } = location.coords;
 
       const response = await outfitAPI.getSuggestion(latitude, longitude);
-      setOutfit(response.data);
-
       navigation.navigate("Result", { outfit: response.data });
     } catch (error) {
       Alert.alert(
@@ -83,103 +90,143 @@ const HomeScreen = ({ navigation }) => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.userHeader}>
-          <View>
-            <Text style={styles.welcomeText}>Bonjour,</Text>
-            <Text style={styles.userName}>{user?.name || "Utilisateur"}</Text>
-          </View>
-          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-            <Text style={styles.logoutText}>Déconnexion</Text>
-          </TouchableOpacity>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={[
+        styles.content,
+        {
+          paddingTop: insets.top + 12,
+          paddingBottom: tabBarHeight + 24,
+          paddingHorizontal: horizontalPadding,
+        },
+      ]}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={styles.userHeader}>
+        <View style={styles.userInfo}>
+          <Text style={styles.welcomeText}>Bonjour,</Text>
+          <Text style={styles.userName}>{user?.name || "Utilisateur"}</Text>
         </View>
+        <TouchableOpacity
+          style={[styles.logoutButton, isCompact && styles.logoutButtonCompact]}
+          onPress={handleLogout}
+        >
+          <Text style={styles.logoutText}>Déconnexion</Text>
+        </TouchableOpacity>
+      </View>
 
-        {loadingWeather ? (
-          <View style={styles.weatherCard}>
-            <ActivityIndicator color="#007AFF" />
-          </View>
-        ) : weather ? (
-          <View style={styles.weatherCard}>
-            <Text style={styles.weatherIcon}>
-              {weather.isRaining ? "🌧️" : "☀️"}
-            </Text>
-            <View style={styles.weatherInfo}>
-              <Text style={styles.weatherTemp}>
-                {Math.round(weather.temperature)}°C
-              </Text>
-              <Text style={styles.weatherCondition}>
-                {weather.isRaining ? "Pluvieux" : "Ensoleillé"}
-              </Text>
-            </View>
-            <TouchableOpacity
-              onPress={loadWeather}
-              style={styles.refreshButton}
+      {loadingWeather ? (
+        <View style={styles.weatherCard}>
+          <ActivityIndicator color="#007AFF" />
+        </View>
+      ) : weather ? (
+        <View style={styles.weatherCard}>
+          <Text style={styles.weatherIcon}>
+            {weather.isRaining ? "🌧️" : "☀️"}
+          </Text>
+          <View style={styles.weatherInfo}>
+            <Text
+              style={[
+                styles.weatherTemp,
+                isCompact && styles.weatherTempCompact,
+              ]}
             >
-              <Text style={styles.refreshIcon}>🔄</Text>
-            </TouchableOpacity>
+              {Math.round(weather.temperature)}°C
+            </Text>
+            <Text style={styles.weatherCondition}>
+              {weather.isRaining ? "Pluvieux" : "Ensoleillé"}
+            </Text>
           </View>
-        ) : null}
-
-        <View style={styles.header}>
-          <Text style={styles.title}>Smart Wardrobe</Text>
-          <Text style={styles.subtitle}>Votre Assistant Style IA</Text>
-        </View>
-
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>🌤️ Tenue selon la météo</Text>
-          <Text style={styles.cardDescription}>
-            Obtenez des suggestions de tenues personnalisées basées sur la météo
-            actuelle
-          </Text>
-
-          <TouchableOpacity
-            style={styles.primaryButton}
-            onPress={getOutfitSuggestion}
-            disabled={loading}
-          >
-            {loading ? (
-              <ActivityIndicator color="#fff" />
-            ) : (
-              <Text style={styles.primaryButtonText}>
-                Obtenir une suggestion
-              </Text>
-            )}
+          <TouchableOpacity onPress={loadWeather} style={styles.refreshButton}>
+            <Text style={styles.refreshIcon}>🔄</Text>
           </TouchableOpacity>
         </View>
+      ) : null}
 
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>👔 Ma Garde-robe</Text>
-          <Text style={styles.cardDescription}>
-            Gérez votre collection de vêtements
-          </Text>
+      <View style={styles.header}>
+        <Text
+          style={[
+            styles.title,
+            isCompact && styles.titleCompact,
+            isVeryCompact && styles.titleVeryCompact,
+          ]}
+        >
+          Smart Wardrobe
+        </Text>
+        <Text style={[styles.subtitle, isCompact && styles.subtitleCompact]}>
+          Votre Assistant Style IA
+        </Text>
+      </View>
 
-          <TouchableOpacity
-            style={styles.secondaryButton}
-            onPress={() => navigation.navigate("Wardrobe")}
+      <View style={styles.card}>
+        <Text style={[styles.cardTitle, isCompact && styles.cardTitleCompact]}>
+          🌤️ Tenue selon la météo
+        </Text>
+        <Text style={styles.cardDescription}>
+          Obtenez des suggestions de tenues personnalisées basées sur la météo
+          actuelle
+        </Text>
+
+        <TouchableOpacity
+          style={styles.primaryButton}
+          onPress={getOutfitSuggestion}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text
+              style={[
+                styles.primaryButtonText,
+                isCompact && styles.buttonTextCompact,
+              ]}
+            >
+              Obtenir une suggestion
+            </Text>
+          )}
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.card}>
+        <Text style={[styles.cardTitle, isCompact && styles.cardTitleCompact]}>
+          👔 Ma Garde-robe
+        </Text>
+        <Text style={styles.cardDescription}>
+          Gérez votre collection de vêtements
+        </Text>
+
+        <TouchableOpacity
+          style={styles.secondaryButton}
+          onPress={() => navigation.navigate("Wardrobe")}
+        >
+          <Text
+            style={[
+              styles.secondaryButtonText,
+              isCompact && styles.buttonTextCompact,
+            ]}
           >
-            <Text style={styles.secondaryButtonText}>Voir ma garde-robe</Text>
-          </TouchableOpacity>
+            Voir ma garde-robe
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.features}>
+        <View style={styles.feature}>
+          <Text style={styles.featureIcon}>🤖</Text>
+          <Text style={styles.featureTitle}>IA Puissante</Text>
+          <Text style={styles.featureText}>Combinaisons intelligentes</Text>
         </View>
 
-        <View style={styles.features}>
-          <View style={styles.feature}>
-            <Text style={styles.featureIcon}>🤖</Text>
-            <Text style={styles.featureTitle}>IA Puissante</Text>
-            <Text style={styles.featureText}>Combinaisons intelligentes</Text>
-          </View>
+        <View style={styles.feature}>
+          <Text style={styles.featureIcon}>🌡️</Text>
+          <Text style={styles.featureTitle}>Météo Adaptée</Text>
+          <Text style={styles.featureText}>Parfait pour tout climat</Text>
+        </View>
 
-          <View style={styles.feature}>
-            <Text style={styles.featureIcon}>🌡️</Text>
-            <Text style={styles.featureTitle}>Météo Adaptée</Text>
-            <Text style={styles.featureText}>Parfait pour tout climat</Text>
-          </View>
-
-          <View style={styles.feature}>
-            <Text style={styles.featureIcon}>✨</Text>
-            <Text style={styles.featureTitle}>Style Assorti</Text>
-            <Text style={styles.featureText}>Looks coordonnés</Text>
-          </View>
+        <View style={styles.feature}>
+          <Text style={styles.featureIcon}>✨</Text>
+          <Text style={styles.featureTitle}>Style Assorti</Text>
+          <Text style={styles.featureText}>Looks coordonnés</Text>
         </View>
       </View>
     </ScrollView>
@@ -192,14 +239,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#f8f9fa",
   },
   content: {
-    padding: 20,
+    flexGrow: 1,
   },
   userHeader: {
     flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 20,
+    alignItems: "flex-start",
+    gap: 12,
     marginBottom: 20,
+  },
+  userInfo: {
+    flexShrink: 1,
   },
   welcomeText: {
     fontSize: 16,
@@ -215,6 +266,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 8,
+    flexShrink: 0,
+  },
+  logoutButtonCompact: {
+    paddingHorizontal: 12,
   },
   logoutText: {
     color: "#fff",
@@ -246,6 +301,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
   },
+  weatherTempCompact: {
+    fontSize: 28,
+  },
   weatherCondition: {
     fontSize: 16,
     color: "#fff",
@@ -266,9 +324,18 @@ const styles = StyleSheet.create({
     color: "#1a1a1a",
     marginBottom: 8,
   },
+  titleCompact: {
+    fontSize: 28,
+  },
+  titleVeryCompact: {
+    fontSize: 24,
+  },
   subtitle: {
     fontSize: 16,
     color: "#666",
+  },
+  subtitleCompact: {
+    fontSize: 15,
   },
   card: {
     backgroundColor: "#fff",
@@ -286,6 +353,9 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#1a1a1a",
     marginBottom: 8,
+  },
+  cardTitleCompact: {
+    fontSize: 18,
   },
   cardDescription: {
     fontSize: 14,
@@ -315,13 +385,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
   },
+  buttonTextCompact: {
+    fontSize: 15,
+  },
   features: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly",
     marginTop: 16,
+    rowGap: 16,
   },
   feature: {
-    flex: 1,
+    flexBasis: 96,
+    flexGrow: 1,
+    maxWidth: 140,
     alignItems: "center",
     padding: 12,
   },
@@ -334,6 +411,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#1a1a1a",
     marginBottom: 4,
+    textAlign: "center",
   },
   featureText: {
     fontSize: 12,

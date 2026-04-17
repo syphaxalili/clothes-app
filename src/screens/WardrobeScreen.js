@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import {
   View,
   Text,
@@ -10,9 +10,13 @@ import {
   RefreshControl,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { clothingAPI } from "../services/api";
 
 const WardrobeScreen = ({ navigation }) => {
+  const insets = useSafeAreaInsets();
+  const tabBarHeight = useBottomTabBarHeight();
   const [clothes, setClothes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -115,7 +119,10 @@ const WardrobeScreen = ({ navigation }) => {
         data={clothes}
         renderItem={renderItem}
         keyExtractor={(item) => item._id}
-        contentContainerStyle={styles.list}
+        contentContainerStyle={[
+          styles.list,
+          { paddingBottom: tabBarHeight + insets.bottom + 32 },
+        ]}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyIcon}>👔</Text>
@@ -131,7 +138,7 @@ const WardrobeScreen = ({ navigation }) => {
       />
 
       <TouchableOpacity
-        style={styles.fab}
+        style={[styles.fab, { bottom: tabBarHeight + 16 }]}
         onPress={() => navigation.navigate("AddClothing")}
       >
         <Text style={styles.fabText}>+</Text>
@@ -152,7 +159,6 @@ const styles = StyleSheet.create({
   },
   list: {
     padding: 16,
-    paddingBottom: 80,
   },
   card: {
     backgroundColor: "#fff",
@@ -228,7 +234,6 @@ const styles = StyleSheet.create({
   fab: {
     position: "absolute",
     right: 20,
-    bottom: 20,
     width: 60,
     height: 60,
     borderRadius: 30,
