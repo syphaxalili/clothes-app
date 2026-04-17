@@ -81,7 +81,7 @@ const AppNavigator = () => {
           <Stack.Screen
             name="MainTabs"
             component={MainTabs}
-            options={{ headerShown: false }}
+            options={{ headerShown: false, title: "Accueil" }}
           />
           <Stack.Screen
             name="Result"

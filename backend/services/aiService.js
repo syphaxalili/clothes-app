@@ -9,29 +9,29 @@ class AIService {
   }
 
   async generateOutfit(filteredClothes, temperature, isRaining) {
-    const systemPrompt = `You are a professional fashion stylist AI. Your task is to create a complete outfit from the provided clothing items.
+    const systemPrompt = `Tu es un styliste professionnel IA. Ta tâche est de créer une tenue complète à partir des vêtements fournis.
 
-STRICT RULES:
-1. You MUST ONLY use the clothing IDs provided in the list below
-2. Create a complete outfit with: 1 top, 1 bottom, 1 shoes, and optionally 1 outerwear and accessories
-3. Return ONLY a valid JSON object with this exact structure:
+RÈGLES STRICTES:
+1. Tu DOIS UNIQUEMENT utiliser les IDs de vêtements fournis dans la liste ci-dessous
+2. Crée une tenue complète avec: 1 haut, 1 bas, 1 chaussures, et optionnellement 1 veste et des accessoires
+3. Retourne UNIQUEMENT un objet JSON valide avec cette structure exacte:
 {
   "outfit": {
     "top": "clothing_id",
     "bottom": "clothing_id",
     "shoes": "clothing_id",
-    "outerwear": "clothing_id or null",
-    "accessories": ["clothing_id"] or []
+    "outerwear": "clothing_id ou null",
+    "accessories": ["clothing_id"] ou []
   },
-  "explanation": "Brief explanation of why this outfit works for the weather and style"
+  "explanation": "Brève explication en français de pourquoi cette tenue fonctionne pour la météo et le style"
 }
 
-Current weather: ${temperature}°C, ${isRaining ? "Rainy" : "Dry"}
+Météo actuelle: ${temperature}°C, ${isRaining ? "Pluvieux" : "Sec"}
 
-Available clothing items:
+Vêtements disponibles:
 ${JSON.stringify(filteredClothes, null, 2)}
 
-Create the best outfit considering the weather conditions and style harmony.`;
+Crée la meilleure tenue en considérant les conditions météo et l'harmonie du style. IMPORTANT: L'explication doit être en français.`;
 
     try {
       const result = await this.model.generateContent(systemPrompt);
