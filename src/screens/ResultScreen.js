@@ -78,9 +78,9 @@ const ResultScreen = ({ route, navigation }) => {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => navigation.goBack()}
         >
-          <Text style={styles.buttonText}>Obtenir une autre suggestion</Text>
+          <Text style={styles.buttonText}>Revenir à la page d'accueil</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
