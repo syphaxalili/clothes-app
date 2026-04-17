@@ -94,7 +94,7 @@ router.put("/:id", async (req, res) => {
         temperatureMin,
         temperatureMax,
       },
-      { new: true },
+      { returnDocument: "after" },
     );
 
     if (!clothing) {
