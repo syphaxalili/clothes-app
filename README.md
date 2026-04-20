@@ -228,6 +228,26 @@ src/
 - Configuration de la base de données
 - Participation à la mise en place de la persistance des données
 
+## Features à venir
+
+### Court terme
+
+- Ajout de la modification complète d'un vêtement directement depuis la garde-robe
+- Amélioration de l'affichage des suggestions de tenues avec plus de détails visuels
+- Ajout de messages d'erreur et de confirmation plus clairs pour l'utilisateur
+- Optimisation de la navigation et de l'expérience utilisateur sur mobile
+- Amélioration de la gestion des cas où aucun vêtement ne correspond à la météo
+
+### Moyen terme
+
+- Ajout d'images pour chaque vêtement de la garde-robe
+- Historique des tenues générées par l'application
+- Système de favoris pour enregistrer les meilleures suggestions
+- Filtrage avancé des vêtements par style, couleur ou saison
+- Recommandations plus personnalisées selon les habitudes de l'utilisateur
+- Notifications ou rappels quotidiens selon la météo
+- Tableau de bord avec statistiques simples sur les vêtements et les tenues utilisées
+
 ## 📝 Licence
 
 MIT
