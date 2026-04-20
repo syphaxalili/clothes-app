@@ -190,10 +190,6 @@ src/
 - Autorisez l'accès à la localisation dans les paramètres de votre téléphone
 - Redémarrez l'application
 
-## 📝 Licence
-
-MIT
-
 ## Répartition des responsabilités
 
 ### Evans
@@ -231,6 +227,10 @@ MIT
 - Intégration de la base de données
 - Configuration de la base de données
 - Participation à la mise en place de la persistance des données
+
+## 📝 Licence
+
+MIT
 
 ## 👨‍💻 Auteur
 
