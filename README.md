@@ -192,37 +192,37 @@ src/
 
 ## Répartition des responsabilités
 
-### Evans
+### Evans KOUASSi
 
 - Intégration de l'API météo
 - Récupération des données de température et de pluie
 - Participation à la logique d'adaptation des tenues selon la météo
 
-### Syphax
+### Syphax ALILI
 
 - Lead du projet
 - Intégration de l'API Gemini
 - Génération des suggestions d'outfit
 
-### Yannis
+### Yanis MEDJADI
 
 - Développement de la partie front-end
 - Mise en place des écrans de l'application mobile
 - Participation à l'interface utilisateur et à la navigation
 
-### Fatma
+### Fatma BOUZID
 
 - Mise en place de l'authentification
 - Gestion de la garde-robe
 - Participation aux fonctionnalités utilisateur liées aux vêtements
 
-### Mohamed
+### Mohamed Abdelmalek DORBANI
 
 - Intégration de la base de données
 - Configuration de la base de données
 - Participation à la mise en place de la persistance des données
 
-### Mohammed
+### Mohammed EL KADDOURI
 
 - Intégration de la base de données
 - Configuration de la base de données
