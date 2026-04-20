@@ -1,25 +1,25 @@
-# Smart Wardrobe Assistant ðŸ‘”
+# Smart Wardrobe Assistant 👔
 
-Une application mobile intelligente qui vous aide Ã  choisir vos tenues en fonction de la mÃ©tÃ©o grÃ¢ce Ã  l'IA.
+Une application mobile intelligente qui vous aide à choisir vos tenues en fonction de la météo grâce à l'IA.
 
-## ðŸš€ FonctionnalitÃ©s
+## 🚀 Fonctionnalités
 
-- **Authentification sÃ©curisÃ©e** : Inscription et connexion avec JWT
-- **Gestion d'armoire** : Ajoutez, visualisez et supprimez vos vÃªtements
-- **Suggestions IA** : Obtenez des recommandations de tenues basÃ©es sur :
-  - La mÃ©tÃ©o actuelle (tempÃ©rature, pluie)
-  - Vos prÃ©fÃ©rences de style
-  - La compatibilitÃ© des couleurs et styles
-- **Interface moderne** : Design Ã©purÃ© et intuitif
+- **Authentification sécurisée** : Inscription et connexion avec JWT
+- **Gestion d'armoire** : Ajoutez, visualisez et supprimez vos vêtements
+- **Suggestions IA** : Obtenez des recommandations de tenues basées sur :
+  - La météo actuelle (température, pluie)
+  - Vos préférences de style
+  - La compatibilité des couleurs et styles
+- **Interface moderne** : Design épuré et intuitif
 
-## ðŸ“‹ PrÃ©requis
+## 📋 Prérequis
 
-- Node.js (v14 ou supÃ©rieur)
+- Node.js (v14 ou supérieur)
 - MongoDB (local ou Atlas)
 - Expo CLI : `npm install -g expo-cli`
-- Un smartphone avec Expo Go ou un Ã©mulateur
+- Un smartphone avec Expo Go ou un émulateur
 
-## ðŸ› ï¸ Installation
+## 🛠️ Installation
 
 ### 1. Backend
 
@@ -28,7 +28,7 @@ cd backend
 npm install
 ```
 
-CrÃ©ez un fichier `.env` basÃ© sur `.env.example` :
+Créez un fichier `.env` basé sur `.env.example` :
 
 ```env
 MONGODB_URI=mongodb://localhost:27017/smart-wardrobe
@@ -37,12 +37,12 @@ PORT=3000
 GEMINI_API_KEY=votre_cle_api_gemini
 ```
 
-**Obtenir une clÃ© API Gemini** :
+**Obtenir une clé API Gemini** :
 1. Allez sur [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. CrÃ©ez une nouvelle clÃ© API
+2. Créez une nouvelle clé API
 3. Copiez-la dans votre fichier `.env`
 
-DÃ©marrez le serveur :
+Démarrez le serveur :
 
 ```bash
 npm run dev
@@ -55,7 +55,7 @@ cd ..
 npm install
 ```
 
-CrÃ©ez un fichier `.env` basÃ© sur `.env.example` :
+Créez un fichier `.env` basé sur `.env.example` :
 
 ```env
 API_URL=http://192.168.1.100:3000/api
@@ -65,7 +65,7 @@ API_URL=http://192.168.1.100:3000/api
 - Windows : `ipconfig` (cherchez "Adresse IPv4")
 - Mac/Linux : `ifconfig` ou `ip addr`
 
-DÃ©marrez l'application :
+Démarrez l'application :
 
 ```bash
 npm start
@@ -73,14 +73,14 @@ npm start
 
 Scannez le QR code avec Expo Go sur votre smartphone.
 
-## ðŸ“± Utilisation
+## 📱 Utilisation
 
-### 1. CrÃ©er un compte
+### 1. Créer un compte
 - Ouvrez l'application
 - Cliquez sur "Sign up"
 - Remplissez vos informations
 
-### 2. Ajouter des vÃªtements
+### 2. Ajouter des vêtements
 - Allez dans l'onglet "Wardrobe"
 - Cliquez sur le bouton "+"
 - Remplissez les informations :
@@ -88,71 +88,71 @@ Scannez le QR code avec Expo Go sur votre smartphone.
   - **Type** : top, bottom, shoes, outerwear, accessory
   - **Style** : casual, formal, sport, etc.
   - **Couleur** : bleu, noir, rouge, etc.
-  - **TempÃ©rature min/max** : plage de tempÃ©rature adaptÃ©e (en Â°C)
-  - **Waterproof** : cochez si impermÃ©able
+  - **Température min/max** : plage de température adaptée (en °C)
+  - **Waterproof** : cochez si imperméable
 
 ### 3. Obtenir une suggestion
 - Allez dans l'onglet "Home"
 - Cliquez sur "Get Outfit Suggestion"
-- Autorisez l'accÃ¨s Ã  votre localisation
-- L'IA vous proposera une tenue complÃ¨te adaptÃ©e Ã  la mÃ©tÃ©o
+- Autorisez l'accès à votre localisation
+- L'IA vous proposera une tenue complète adaptée à la météo
 
-## ðŸ—ï¸ Architecture
+## 🏗️ Architecture
 
 ### Backend (Node.js + Express)
 
-```
+```text
 backend/
-â”œâ”€â”€ models/
-â”‚   â”œâ”€â”€ User.js          # ModÃ¨le utilisateur
-â”‚   â””â”€â”€ Clothing.js      # ModÃ¨le vÃªtement
-â”œâ”€â”€ routes/
-â”‚   â”œâ”€â”€ auth.js          # Routes d'authentification
-â”‚   â”œâ”€â”€ clothing.js      # CRUD vÃªtements
-â”‚   â””â”€â”€ outfit.js        # Suggestions IA
-â”œâ”€â”€ services/
-â”‚   â”œâ”€â”€ weatherService.js # API Open-Meteo
-â”‚   â””â”€â”€ aiService.js      # API Gemini
-â”œâ”€â”€ middleware/
-â”‚   â””â”€â”€ auth.js          # Middleware JWT
-â””â”€â”€ server.js            # Point d'entrÃ©e
+├── models/
+│   ├── User.js          # Modèle utilisateur
+│   └── Clothing.js      # Modèle vêtement
+├── routes/
+│   ├── auth.js          # Routes d'authentification
+│   ├── clothing.js      # CRUD vêtements
+│   └── outfit.js        # Suggestions IA
+├── services/
+│   ├── weatherService.js # API Open-Meteo
+│   └── aiService.js      # API Gemini
+├── middleware/
+│   └── auth.js          # Middleware JWT
+└── server.js            # Point d'entrée
 ```
 
 ### Frontend (React Native + Expo)
 
-```
+```text
 src/
-â”œâ”€â”€ context/
-â”‚   â””â”€â”€ AuthContext.js   # Gestion authentification
-â”œâ”€â”€ navigation/
-â”‚   â””â”€â”€ AppNavigator.js  # Navigation Stack/Tabs
-â”œâ”€â”€ screens/
-â”‚   â”œâ”€â”€ LoginScreen.js
-â”‚   â”œâ”€â”€ RegisterScreen.js
-â”‚   â”œâ”€â”€ HomeScreen.js
-â”‚   â”œâ”€â”€ WardrobeScreen.js
-â”‚   â”œâ”€â”€ AddClothingScreen.js
-â”‚   â””â”€â”€ ResultScreen.js
-â””â”€â”€ services/
-    â””â”€â”€ api.js           # Client API Axios
+├── context/
+│   └── AuthContext.js   # Gestion authentification
+├── navigation/
+│   └── AppNavigator.js  # Navigation Stack/Tabs
+├── screens/
+│   ├── LoginScreen.js
+│   ├── RegisterScreen.js
+│   ├── HomeScreen.js
+│   ├── WardrobeScreen.js
+│   ├── AddClothingScreen.js
+│   └── ResultScreen.js
+└── services/
+    └── api.js           # Client API Axios
 ```
 
-## ðŸ”’ SÃ©curitÃ©
+## 🔒 Sécurité
 
-- âœ… Mots de passe hashÃ©s avec bcrypt
-- âœ… Authentification JWT
-- âœ… Variables d'environnement pour les secrets
-- âœ… Validation des donnÃ©es cÃ´tÃ© serveur
-- âœ… Middleware d'authentification
+- ✅ Mots de passe hashés avec bcrypt
+- ✅ Authentification JWT
+- ✅ Variables d'environnement pour les secrets
+- ✅ Validation des données côté serveur
+- ✅ Middleware d'authentification
 
-## ðŸŒ APIs UtilisÃ©es
+## 🌐 APIs Utilisées
 
-- **Open-Meteo** : DonnÃ©es mÃ©tÃ©o gratuites (pas de clÃ© API requise)
-- **Google Gemini** : IA gÃ©nÃ©rative pour les suggestions de tenues
+- **Open-Meteo** : Données météo gratuites (pas de clé API requise)
+- **Google Gemini** : IA générative pour les suggestions de tenues
 
-## ðŸ“Š SchÃ©ma de donnÃ©es
+## 📊 Schéma de données
 
-### Clothing (VÃªtement)
+### Clothing (Vêtement)
 
 ```javascript
 {
@@ -163,75 +163,75 @@ src/
   isWaterproof: Boolean,     // true/false
   temperatureMin: Number,    // -10
   temperatureMax: Number,    // 15
-  userId: ObjectId           // RÃ©fÃ©rence utilisateur
+  userId: ObjectId           // Référence utilisateur
 }
 ```
 
-## ðŸŽ¨ Design
+## 🎨 Design
 
-- Interface moderne et Ã©purÃ©e
-- Palette de couleurs cohÃ©rente
-- IcÃ´nes emoji pour une meilleure UX
+- Interface moderne et épurée
+- Palette de couleurs cohérente
+- Icônes emoji pour une meilleure UX
 - Animations fluides
 - Design responsive
 
-## ðŸ› DÃ©pannage
+## 🐛 Dépannage
 
-### Le backend ne dÃ©marre pas
-- VÃ©rifiez que MongoDB est en cours d'exÃ©cution
-- VÃ©rifiez les variables d'environnement dans `.env`
+### Le backend ne démarre pas
+- Vérifiez que MongoDB est en cours d'exécution
+- Vérifiez les variables d'environnement dans `.env`
 
 ### L'app ne se connecte pas au backend
-- VÃ©rifiez que l'URL dans `.env` utilise votre IP locale (pas localhost)
-- VÃ©rifiez que le backend est dÃ©marrÃ©
-- VÃ©rifiez que vous Ãªtes sur le mÃªme rÃ©seau WiFi
+- Vérifiez que l'URL dans `.env` utilise votre IP locale (pas localhost)
+- Vérifiez que le backend est démarré
+- Vérifiez que vous êtes sur le même réseau WiFi
 
 ### Erreur de localisation
-- Autorisez l'accÃ¨s Ã  la localisation dans les paramÃ¨tres de votre tÃ©lÃ©phone
-- RedÃ©marrez l'application
+- Autorisez l'accès à la localisation dans les paramètres de votre téléphone
+- Redémarrez l'application
 
-## ðŸ“ Licence
+## 📝 Licence
 
 MIT
 
-## Repartition des responsabilites
+## Répartition des responsabilités
 
 ### Evans
 
-- Integration de l'API meteo
-- Recuperation des donnees de temperature et de pluie
-- Participation a la logique d'adaptation des tenues selon la meteo
+- Intégration de l'API météo
+- Récupération des données de température et de pluie
+- Participation à la logique d'adaptation des tenues selon la météo
 
 ### Syphax
 
 - Lead du projet
-- Integration de l'API Gemini
-- Generation des suggestions d'outfit
+- Intégration de l'API Gemini
+- Génération des suggestions d'outfit
 
 ### Yannis
 
-- Developpement de la partie front-end
-- Mise en place des ecrans de l'application mobile
-- Participation a l'interface utilisateur et a la navigation
+- Développement de la partie front-end
+- Mise en place des écrans de l'application mobile
+- Participation à l'interface utilisateur et à la navigation
 
 ### Fatma
 
 - Mise en place de l'authentification
 - Gestion de la garde-robe
-- Participation aux fonctionnalites utilisateur liees aux vetements
+- Participation aux fonctionnalités utilisateur liées aux vêtements
 
 ### Mohamed
 
-- Integration de la base de donnees
-- Configuration de la base de donnees
-- Participation a la mise en place de la persistence des donnees
+- Intégration de la base de données
+- Configuration de la base de données
+- Participation à la mise en place de la persistance des données
 
 ### Mohammed
 
-- Integration de la base de donnees
-- Configuration de la base de donnees
-- Participation a la mise en place de la persistence des donnees
+- Intégration de la base de données
+- Configuration de la base de données
+- Participation à la mise en place de la persistance des données
 
-## ðŸ‘¨â€ðŸ’» Auteur
+## 👨‍💻 Auteur
 
-DÃ©veloppÃ© avec â¤ï¸ pour le projet IPSSI MIA
+Développé avec ❤️ pour le projet IPSSI MIA
